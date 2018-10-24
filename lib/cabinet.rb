@@ -8,13 +8,6 @@ class Scraped::Request::Strategy::LiveRequest
 
   private
 
-  def sparql(query)
-    result = RestClient.get WIKIDATA_SPARQL_URL, accept: 'text/csv', params: { query: query }
-    CSV.parse(result, headers: true, header_converters: :symbol)
-  rescue RestClient::Exception => e
-    raise "Wikidata query #{query} failed: #{e.message}"
-  end
-
   SPARQL_URL = 'https://query.wikidata.org/sparql?format=json&query=%s'
 
   QUERY = <<~SPARQL
